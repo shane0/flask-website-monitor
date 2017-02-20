@@ -6,8 +6,12 @@ import traceback
 import requests
 import re
 import json
+import smtplib
+import datetime
 
 from argparse import ArgumentParser
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 DEFAULT_CONFIG_FILE = 'config.json'
 
@@ -19,24 +23,46 @@ def _check(args):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
     }
 
-    session = requests.Session()
-    session.headers.update(headers)
-
     with open(DEFAULT_CONFIG_FILE) as config_file:
         config = json.load(config_file)
 
     websites = config["websites"]
+    sender = config["sender"]
+    recipients = config["recipients"]
+    msg_body = ''
 
     for site in websites:
-        status = session.get(websites[site]).status_code
-        print('%-25s %-35s \033[1;32;40m%d\033[0;m' % (site, websites[site], status))
+        try:
+            res = requests.get(websites[site], headers=headers)
+            status = 'OK' if res.status_code == 200 else res.status_code
+        except:
+            status = 'TIMEOUT'
+
+        result = '%-25s %-35s %10s' % (site, websites[site], status)
+        msg_body += result + '\n\r'
+        print(result)
+
+    message = MIMEText(msg_body, 'plain', 'utf-8')
+    message['Subject'] = "Website daily check - %s" % datetime.datetime.now()
+    message['From'] = sender['account']
+    message['To'] = ';'.join(recipients)
+
+    try:
+        server = smtplib.SMTP(config['host'])
+        server.login(sender['account'], sender['password'])
+        server.sendmail(sender['account'], recipients, message.as_string())
+        server.quit()
+    except smtplib.SMTPException as e:
+        print(e)
+
 
 def main():
     usage = '%(prog)s [<args>]'
     description = 'A website checker.'
     parser = ArgumentParser(usage = usage, description = description)
 
-    _check(None)
+    args = parser.parse_args()
+    _check(args)
 
     return None
 
