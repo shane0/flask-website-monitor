@@ -51,7 +51,7 @@ def _check(args):
         try:
             server = smtplib.SMTP(config['host'])
             server.login(sender['account'], sender['password'])
-#            server.sendmail(sender['account'], recipients, message.as_string())
+            server.sendmail(sender['account'], recipients, message.as_string())
             server.quit()
         except smtplib.SMTPException as e:
             print(e)
