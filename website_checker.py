@@ -36,15 +36,6 @@ def main():
     description = 'A website checker.'
     parser = ArgumentParser(usage = usage, description = description)
 
-    # parser.add_argument('-s', '--daily', action = 'store_true',
-    #                     help = 'extract kindle daily deals')
-    # parser.add_argument('-w', '--weekly', action = 'store_true',
-    #                     help = 'extract kindle weekly deals')
-    # parser.add_argument('-m', '--monthly', action = 'store_true',
-    #                     help = 'extract kindle monthly deals')
-
-    # args = parser.parse_args()
-
     _check(None)
 
     return None
