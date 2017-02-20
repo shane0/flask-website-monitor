@@ -29,26 +29,54 @@ def _check(args):
     websites = config["websites"]
     sender = config["sender"]
     recipients = config["recipients"]
-    msg_body = ''
+    results = []
+
+    class Result:
+        def __init__(self, site, url, status):
+            self.site = site
+            self.url = url
+            self.status = status
+
+        def __str__(self):
+            return '%-25s %-35s %10s' % (site, url, status)
+
+        def to_html(self):
+            color = 'green' if self.status == 'OK' else 'red'
+
+            return '''<tr style="height: 30px;">
+            <td style="width: 25%%;">%s</td>
+            <td style="width: 50%%;">%s</td>
+            <td style="width: 25%%; color: %s">%s</td>
+            </tr>''' % (self.site, self.url, color, self.status)
 
     for site in websites:
+        url = websites[site]
+
         try:
             res = requests.get(websites[site], headers=headers)
             status = 'OK' if res.status_code == 200 else res.status_code
         except:
             status = 'TIMEOUT'
 
-        result = '%-25s %-35s %10s' % (site, websites[site], status)
-        msg_body += result + '\n\r'
+        result = Result(site, url, status)
+        results.append(result)
         print(result)
-
-    message = MIMEText(msg_body, 'plain', 'utf-8')
-    message['Subject'] = "Website daily check - %s" % datetime.datetime.now()
-    message['From'] = sender['account']
-    message['To'] = ';'.join(recipients)
 
     if (args.mail):
         try:
+            msg_body = '<html><body><table>'
+            msg_body += '''<thead><tr>
+            <th style="width: 30%%">SITE</th>
+            <th style="width: 60%%">URL</th>
+            <th style="width: 10%%">STATUS</th>
+            </tr></thead>'''
+            msg_body += '<tbody>%s</tbody>' % ''.join([r.to_html() for r in results])
+            msg_body += '</table></body></html>'
+            message = MIMEText(msg_body, 'html', 'utf-8')
+            message['Subject'] = "Website daily check - %s" % datetime.datetime.now()
+            message['From'] = sender['account']
+            message['To'] = ';'.join(recipients)
+
             server = smtplib.SMTP(config['host'])
             server.login(sender['account'], sender['password'])
             server.sendmail(sender['account'], recipients, message.as_string())
