@@ -47,19 +47,23 @@ def _check(args):
     message['From'] = sender['account']
     message['To'] = ';'.join(recipients)
 
-    try:
-        server = smtplib.SMTP(config['host'])
-        server.login(sender['account'], sender['password'])
-        server.sendmail(sender['account'], recipients, message.as_string())
-        server.quit()
-    except smtplib.SMTPException as e:
-        print(e)
+    if (args.mail):
+        try:
+            server = smtplib.SMTP(config['host'])
+            server.login(sender['account'], sender['password'])
+#            server.sendmail(sender['account'], recipients, message.as_string())
+            server.quit()
+        except smtplib.SMTPException as e:
+            print(e)
 
 
 def main():
     usage = '%(prog)s [<args>]'
     description = 'A website checker.'
-    parser = ArgumentParser(usage = usage, description = description)
+    parser = ArgumentParser(usage=usage, description=description)
+
+    parser.add_argument('-m', '--mail', action='store_true',
+                        help='sent email to recipients')
 
     args = parser.parse_args()
     _check(args)
