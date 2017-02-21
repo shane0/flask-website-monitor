@@ -24,10 +24,11 @@ def _check(args):
     }
 
     try:
-        with open(DEFAULT_CONFIG_FILE) as config_file:
-            config = json.load(config_file)
+        config_file = DEFAULT_CONFIG_FILE if not (args.config) else args.config
+        with open(config_file) as config_data:
+            config = json.load(config_data)
     except:
-        print('No config file.')
+        print('No such config file.')
         sys.exit(-1)
 
     websites = config["websites"]
@@ -96,6 +97,9 @@ def main():
     usage = '%(prog)s [<args>]'
     description = 'A website checker.'
     parser = ArgumentParser(usage=usage, description=description)
+
+    parser.add_argument('-c', '--config', nargs='?',
+                        help='specify config file')
 
     parser.add_argument('-m', '--mail', action='store_true',
                         help='sent email to recipients')
