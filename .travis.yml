@@ -7,7 +7,7 @@ python:
 
 sudo: false
 
-script: ./website-monitor.py
+script: ./website_monitor.py
 
 notifications:
   email: false
