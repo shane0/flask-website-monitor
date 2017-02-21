@@ -1,0 +1,13 @@
+{
+  "websites": {
+    "GitHub": "https://github.com/"
+  },
+  "host": "SMTP-HOST",
+  "sender": {
+    "account": "ACCOUNT",
+    "password": "PASSWORD"
+  },
+  "recipients": [
+    "RECIPIENTS-EMAIL-ADDRESS"
+  ]
+}

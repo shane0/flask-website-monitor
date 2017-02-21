@@ -91,4 +91,3 @@ ENV/
 #Others
 cron/
 *.log
-config.json
