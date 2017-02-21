@@ -1,6 +1,6 @@
-# website-checker
+# website-monitor
 
-A website checker.
+A website monitor.
 
 ## License
 

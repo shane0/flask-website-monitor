@@ -95,7 +95,7 @@ def _check(args):
 
 def main():
     usage = '%(prog)s [<args>]'
-    description = 'A website checker.'
+    description = 'A website monitor.'
     parser = ArgumentParser(usage=usage, description=description)
 
     parser.add_argument('-c', '--config', nargs='?',
