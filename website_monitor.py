@@ -15,7 +15,7 @@ from email.mime.multipart import MIMEMultipart
 
 DEFAULT_CONFIG_FILE = 'config.json'
 
-def _check(args):
+def check(args):
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, sdch',
@@ -92,8 +92,7 @@ def _check(args):
         except smtplib.SMTPException as e:
             print(e)
 
-
-def main():
+if __name__ == '__main__':
     usage = '%(prog)s [<args>]'
     description = 'A website monitor.'
     parser = ArgumentParser(usage=usage, description=description)
@@ -104,10 +103,4 @@ def main():
     parser.add_argument('-m', '--mail', action='store_true',
                         help='sent email to recipients')
 
-    args = parser.parse_args()
-    _check(args)
-
-    return None
-
-if __name__ == '__main__':
-    main()
+    check(parser.parse_args())
