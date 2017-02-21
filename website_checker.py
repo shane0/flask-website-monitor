@@ -23,8 +23,12 @@ def _check(args):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
     }
 
-    with open(DEFAULT_CONFIG_FILE) as config_file:
-        config = json.load(config_file)
+    try:
+        with open(DEFAULT_CONFIG_FILE) as config_file:
+            config = json.load(config_file)
+    except:
+        print('No config file.')
+        sys.exit(-1)
 
     websites = config["websites"]
     sender = config["sender"]
