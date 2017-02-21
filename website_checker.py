@@ -49,6 +49,9 @@ def _check(args):
             <td style="width: 25%%; color: %s">%s</td>
             </tr>''' % (self.site, self.url, color, self.status)
 
+    now = datetime.datetime.now()
+    print(now)
+
     for site in websites:
         url = websites[site]
 
@@ -73,7 +76,7 @@ def _check(args):
             msg_body += '<tbody>%s</tbody>' % ''.join([r.to_html() for r in results])
             msg_body += '</table></body></html>'
             message = MIMEText(msg_body, 'html', 'utf-8')
-            message['Subject'] = "Website daily check - %s" % datetime.datetime.now()
+            message['Subject'] = "Website daily check - %s" % now
             message['From'] = sender['account']
             message['To'] = ';'.join(recipients)
 
