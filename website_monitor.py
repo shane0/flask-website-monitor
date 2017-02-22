@@ -85,7 +85,7 @@ def check(args):
             message['From'] = sender['account']
             message['To'] = ';'.join(recipients)
 
-            server = smtplib.SMTP(config['host'])
+            server = smtplib.SMTP(sender['host'])
             server.login(sender['account'], sender['password'])
             server.sendmail(sender['account'], recipients, message.as_string())
             server.quit()
