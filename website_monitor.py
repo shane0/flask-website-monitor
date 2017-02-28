@@ -43,16 +43,16 @@ def check(args):
             self.status = status
 
         def __str__(self):
-            return '%-25s %-35s %10s' % (site, url, status)
+            return '%-8s %-20s %-50s' % (status, site, url)
 
         def to_html(self):
             color = 'green' if self.status == 'OK' else 'red'
 
             return '''<tr style="height: 30px;">
-            <td style="width: 25%%;">%s</td>
-            <td style="width: 50%%;">%s</td>
-            <td style="width: 25%%; color: %s">%s</td>
-            </tr>''' % (self.site, self.url, color, self.status)
+            <td style="text-align: center; color: %s">%s</td>
+            <td>%s</td>
+            <td>%s</td>
+            </tr>''' % (color, self.status, self.site, self.url)
 
     now = datetime.datetime.now()
     print(now)
@@ -72,11 +72,11 @@ def check(args):
 
     if (args.mail):
         try:
-            msg_body = '<html><body><table>'
+            msg_body = '<html><body><table style="font-size: 12px; font-family: monospace">'
             msg_body += '''<thead><tr>
+            <th style="width: 15%%">STATUS</th>
             <th style="width: 30%%">SITE</th>
-            <th style="width: 60%%">URL</th>
-            <th style="width: 10%%">STATUS</th>
+            <th style="width: 55%%">URL</th>
             </tr></thead>'''
             msg_body += '<tbody>%s</tbody>' % ''.join([r.to_html() for r in results])
             msg_body += '</table></body></html>'
