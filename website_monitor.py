@@ -43,7 +43,7 @@ def check(args):
             self.status = status
 
         def __str__(self):
-            return '%-8s %-20s %-50s' % (status, site, url)
+            return '%-8s %-25s %-45s' % (status, site, url)
 
         def to_html(self):
             color = 'green' if self.status == 'OK' else 'red'
@@ -57,7 +57,7 @@ def check(args):
     now = datetime.datetime.now()
     print(now)
 
-    for site in websites:
+    for site in sorted(websites):
         url = websites[site]
 
         try:
@@ -78,7 +78,8 @@ def check(args):
             <th style="width: 30%%">SITE</th>
             <th style="width: 55%%">URL</th>
             </tr></thead>'''
-            msg_body += '<tbody>%s</tbody>' % ''.join([r.to_html() for r in results])
+            msg_body_str = ''.join([r.to_html() for r in sorted(results, key=lambda rst: rst.site)])
+            msg_body += '<tbody>%s</tbody>' % msg_body_str
             msg_body += '</table></body></html>'
             message = MIMEText(msg_body, 'html', 'utf-8')
             message['Subject'] = "Website daily check - %s" % now
