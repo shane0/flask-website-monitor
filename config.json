@@ -1,6 +1,6 @@
 {
   "websites": {
-    "[Website] Stack Overflow": "http://stackoverflow.com/",
+    "[Website] Stack Overflow": "https://stackoverflow.com/",
     "[Website] GitHub": "https://github.com/"
   },
   "host": "SMTP-HOST",
