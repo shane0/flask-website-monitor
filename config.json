@@ -1,10 +1,10 @@
 {
   "websites": {
-    "[Website] Stack Overflow": "https://stackoverflow.com/",
-    "[Website] GitHub": "https://github.com/"
+    "Stack Overflow": "https://stackoverflow.com/",
+    "GitHub": "https://github.com/"
   },
-  "host": "SMTP-HOST",
   "sender": {
+    "host": "SMTP-HOST",
     "account": "ACCOUNT",
     "password": "PASSWORD"
   },
