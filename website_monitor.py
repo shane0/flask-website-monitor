@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+A website monitor.
+"""
+
 import sys
 import traceback
 import requests
@@ -70,7 +74,7 @@ def check(args):
         results.append(result)
         print(result)
 
-    if (args.mail):
+    if args.mail:
         try:
             msg_body = '<html><body><table style="font-size: 12px; font-family: monospace">'
             msg_body += '''<thead><tr>
