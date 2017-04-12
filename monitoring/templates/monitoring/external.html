@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block page_title %}monitoring{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12"><br>
+      {{status|safe}}
+    </div>
+</div>
+{% endblock content %}
