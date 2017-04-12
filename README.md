@@ -4,7 +4,7 @@
 
 A website monitor.
 
-This forks for use as a [flask](http://flask.pocoo.org/) app.
+This forks for use as a [flask](http://flask.pocoo.org/) app, more specifically I'm using [cookiecutter-flask](https://github.com/sloria/cookiecutter-flask) but you can easily edit this for whatever flavor you use.
 
 ## License
 
