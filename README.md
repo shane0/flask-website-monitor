@@ -4,6 +4,8 @@
 
 A website monitor.
 
+This forks for use as a [flask](http://flask.pocoo.org/) app.
+
 ## License
 
 [MIT](LICENSE)
